@@ -1,0 +1,1 @@
+In order for this project to launch, both the server and client-side code need to be initialized. The server will run on localhost:5000 while the client will run on localhost:3000

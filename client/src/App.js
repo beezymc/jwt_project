@@ -20,6 +20,9 @@ function App() {
     setIsAuthenticated(boolean);
   };
 
+  //This function is used to check if a user has a valid JWT token. The user's status will then be passed as a prop to whatever page they visit.
+  //A valid token is required for the Dashboard, but not for the Login or Register routes. The user will be redirected to the dashboard from register/login
+  //if logged in, and will be redirected to login from the dashboard if not logged in.
   async function isAuth() {
     try {
       const response = await fetch("http://localhost:5000/auth/is-verify", {

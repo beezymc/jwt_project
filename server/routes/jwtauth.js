@@ -6,7 +6,6 @@ const validInfo = require('../middleware/validInfo');
 const authorization = require('../middleware/authorization');
 
 //register
-
 router.post("/register", validInfo, async(req, res) => {
     try {
         //destructure
@@ -34,22 +33,20 @@ router.post("/register", validInfo, async(req, res) => {
 })
 
 //login route
-
 router.post("/login", validInfo, async (req, res) => {
     try {
-        //destructure
         const { email, password } = req.body;
-        //check if user doesn't exist (if not we throw error)
+        //Check if the user doesn't exist (if they don't exist we throw an error).
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
         if (user.rows.length === 0) {
             return res.status(401).json("Password or Email is incorrect");
         }
-        //check if incoming pw is same as db pw
+        //Check if the incoming password is the same as the encrypted one stored in the database.
         const validPassword = await bcrypt.compare(password, user.rows[0].user_password);
-        //give them a jwt token
         if (!validPassword) {
             return res.status(401).json("Invalid Credential");
         }
+        //Give them a JWT token if valid.
         const token = jwtGenerator(user.rows[0].user_id);
         return res.json( { token });
     } catch (err) {
@@ -58,6 +55,7 @@ router.post("/login", validInfo, async (req, res) => {
     }
 })
 
+//This route checks if a user is authorized to view certain content.
 router.get("/is-verify", authorization, async (req, res) => {
     try {
         res.json(true);

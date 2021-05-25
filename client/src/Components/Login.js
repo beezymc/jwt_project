@@ -15,6 +15,9 @@ const Login = ({ setAuth }) => {
         setInputs({...inputs, [e.target.name]: e.target.value})
     };
 
+    //This function takes the user's email and password and makes a post request to the DB with the given information in the body.
+    //If the response from the server has a jwt token (which only occurs if the username and password are valid), the token will be placed in the user's 
+    //local storage, and the user will be logged in.
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {

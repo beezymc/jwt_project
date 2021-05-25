@@ -1,6 +1,5 @@
 CREATE DATABASE jwttutorial;
 
---set extension
 CREATE TABLE users(
     id uuid PRIMARY KEY DEFAULT
     uuid_generate_v4(),
